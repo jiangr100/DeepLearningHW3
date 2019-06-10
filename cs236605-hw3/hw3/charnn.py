@@ -284,11 +284,6 @@ class MultilayerGRU(nn.Module):
             sigm1 = nn.Sigmoid()
             sigm2 = nn.Sigmoid()
             tanh = nn.Tanh()
-            layer_list.extend([fc_xz, fc_hz, fc_xr, fc_hr, fc_xg, fc_hg, sigm1, sigm2, tanh])
-            if self.dropout:
-                dropout = nn.Dropout(p=self.dropout)
-                layer_list.append(dropout)
-            self.layer_params.append(layer_list)
             
             self.add_module('fc_xz'+str(i), fc_xz)
             self.add_module('fc_hz'+str(i), fc_hz)
@@ -301,6 +296,12 @@ class MultilayerGRU(nn.Module):
             self.add_module('tanh'+str(i), tanh)
             if self.dropout:
                 self.add_module('dropout'+str(i), dropout)
+            
+            layer_list.extend([fc_xz, fc_hz, fc_xr, fc_hr, fc_xg, fc_hg, sigm1, sigm2, tanh])
+            if self.dropout:
+                dropout = nn.Dropout(p=self.dropout)
+                layer_list.append(dropout)
+            self.layer_params.append(layer_list)
             
             in_dim = h_dim    #important! from the second layer we start to have h as inputs
         
