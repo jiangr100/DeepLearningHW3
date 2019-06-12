@@ -151,6 +151,8 @@ def chars_to_labelled_samples(text: str, char_to_idx: dict, seq_len: int,
     samples = sample_text_tensor.reshape(-1, seq_len, sample_text_tensor.shape[1])
     labels = label_text_tensor.reshape(-1, seq_len)
     
+    print(device)
+    
     samples.to(device)
     labels.to(device)
     
